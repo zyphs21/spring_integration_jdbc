@@ -2,6 +2,8 @@ package org.hanson.test;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.hanson.dao.IGroupDao;
@@ -49,6 +51,23 @@ public class TestJdbc
 	public void testDelete()
 	{
 		userJdbcDao.delete(1);
+	}
+	
+	@Test
+	public void testLoad()
+	{
+		User u = userJdbcDao.load(2);
+		System.out.println(u.getNickname() + "u.getGroup().getName()");
+	}
+	
+	@Test
+	public void testList()
+	{
+		List<User> us = userJdbcDao.list("select t1.id groupId,t1.*,t2.* from user t1 left join group t2(t1.groupId=t2.groupId)", null);
+		for(User u:us)
+		{
+			System.out.println(u);
+		}
 	}
 
 }
